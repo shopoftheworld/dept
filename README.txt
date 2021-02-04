@@ -2,7 +2,7 @@ Code exercise for DEPT
 
 The implementation is fairly crude and given more time I would definetely improve some things - there was a fair bit of googling involved and took me about 5 hours in total so a bit slow I know.
 
-To install download to your sites /modules/custom directory and either use druag 'drush en dept' or switch on usng the drupal interface
+To install download to your sites /modules/custom directory and either use drush 'drush en dept' or switch on usng the drupal interface
 
 On install any users that do not have an auth token will be given one. 
 
