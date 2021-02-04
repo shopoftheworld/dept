@@ -1,0 +1,77 @@
+<?php
+
+	use Drupal\Core\Database\Database;
+	use Drupal\user\Entity\User;
+
+/**
+ * Implements hook_install().
+ *
+ * sets each user to have an AUTH TOKEN
+ */
+function dept_install() {
+	
+	// on install all users are given a user token
+	$db_connection = Database::getConnection();
+    $results = $db_connection->query('SELECT uid FROM {users}')->fetchAllAssoc('uid');
+      
+    foreach ($results as $data) {
+      
+      $user = User::load($data->uid);
+
+      \Drupal::logger('dept')->notice('<pre>' . print_r($user, TRUE) . '</pre>');
+      \Drupal::logger('dept user auth value')->notice('<pre>' . $user->field_auth_token->value . '</pre>');
+
+      $auth_token = $user->field_auth_token->value;
+
+      if(!isset($auth_token) || strlen($auth_token) != 32 ) {
+
+        // if user doesnt have a valid token set a new token
+        // random string - this could be better I am sure
+        $length =32;
+        $random_string = substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length/strlen($x)) )),1,$length);
+
+        $user->set('field_auth_token', $random_string);
+
+        $count++;
+
+      }
+      
+      $user->save();
+     }
+}
+
+/**
+ * Implements hook_insert().
+ *
+ * sets each user to have an AUTH TOKEN on creation
+ */
+function dept_user_insert() {
+	// on insert user all users are given a user token if they dont already have one
+	$db_connection = Database::getConnection();
+    $results = $db_connection->query('SELECT uid FROM {users}')->fetchAllAssoc('uid');
+      
+    foreach ($results as $data) {
+      
+      $user = User::load($data->uid);
+
+      \Drupal::logger('dept')->notice('<pre>' . print_r($user, TRUE) . '</pre>');
+      \Drupal::logger('dept user auth value')->notice('<pre>' . $user->field_auth_token->value . '</pre>');
+
+      $auth_token = $user->field_auth_token->value;
+
+      if(!isset($auth_token) || strlen($auth_token) != 32 ) {
+
+        // if user doesnt have a valid token set a new token
+        // random string - this could be better I am sure
+        $length =32;
+        $random_string = substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length/strlen($x)) )),1,$length);
+
+        $user->set('field_auth_token', $random_string);
+
+        $count++;
+
+      }
+      
+      $user->save();
+     }
+}

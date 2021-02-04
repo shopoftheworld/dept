@@ -1,0 +1,5 @@
+name: 'Dept Coding Exercise'
+type: module
+description: 'Contains exercise for Dept Coding test'
+core: 8.x
+package: 'Dept'

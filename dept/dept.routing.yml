@@ -1,0 +1,7 @@
+dept.dept_user_controller_updateUsers:
+  path: '/dept/updateusers'
+  defaults:
+    _controller: '\Drupal\dept\Controller\DeptUserController::updateUsers'
+    _title: 'Dept - update users'
+  requirements:
+    _permission: 'access content'

@@ -1,0 +1,4 @@
+services:
+  dept.authenticateuser:
+    class: Drupal\dept\AuthenticateUser
+    arguments: []
